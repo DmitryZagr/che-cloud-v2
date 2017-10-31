@@ -38,7 +38,6 @@ services:
   ########################
   postgres:
     image: postgres:9.6
-  #  command: [ "/var/lib/pgsql/init-che-user-and-run.sh" ]
     environment:
       - POSTGRESQL_USER=keycloak
       - POSTGRESQL_PASSWORD=keycloak
@@ -51,8 +50,6 @@ services:
     volumes:
       - './data/postgres:/var/lib/pgsql/data:rw'
       - './config/postgres/init-che-user.sh:/docker-entrypoint-initdb.d/init-che-user.sh'
-      #- './config/postgres/init-che-user.sh:/var/lib/pgsql/init-che-user.sh'
-      #- './config/postgres/init-che-user-and-run.sh:/var/lib/pgsql/init-che-user-and-run.sh'
     healthcheck:
         test: [ "CMD", "/bin/sh", "-i", "-c", "psql -h 127.0.0.1 -U keycloak -q -d keycloak -c 'SELECT 1'" ]
         interval: 10s
