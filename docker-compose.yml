@@ -3,7 +3,7 @@
 # PLEASE DON'T MODIFY BY HAND
 # ###################################
 
-version: '3.3'
+version: '2.1'
 services:
 
   ########################
@@ -15,9 +15,9 @@ services:
       - './config/che/che.env'
     links:
       - postgres:postgres
-    #depends_on:
-    #  postgres:
-    #    condition: service_healthy
+    depends_on:
+      postgres:
+        condition: service_healthy
     networks:
       - default
       - che-network
@@ -37,8 +37,8 @@ services:
   # POSTGRES
   ########################
   postgres:
-    image: centos/postgresql-96-centos7:9.6
-    command: [ "/var/lib/pgsql/init-che-user-and-run.sh" ]
+    image: postgres:9.6
+  #  command: [ "/var/lib/pgsql/init-che-user-and-run.sh" ]
     environment:
       - POSTGRESQL_USER=keycloak
       - POSTGRESQL_PASSWORD=keycloak
@@ -49,11 +49,10 @@ services:
  
   
     volumes:
-    #  - './data/postgres:/var/lib/pgsql/data:rw'
-      - './config/postgres/init-che-user.sh:/var/lib/pgsql/init-che-user.sh'
-      - './config/postgres/init-che-user-and-run.sh:/var/lib/pgsql/init-che-user-and-run.sh'
-    ports:
-      - '5432:5432'
+      - './data/postgres:/var/lib/pgsql/data:rw'
+      - './config/postgres/init-che-user.sh:/docker-entrypoint-initdb.d/init-che-user.sh'
+      #- './config/postgres/init-che-user.sh:/var/lib/pgsql/init-che-user.sh'
+      #- './config/postgres/init-che-user-and-run.sh:/var/lib/pgsql/init-che-user-and-run.sh'
     healthcheck:
         test: [ "CMD", "/bin/sh", "-i", "-c", "psql -h 127.0.0.1 -U keycloak -q -d keycloak -c 'SELECT 1'" ]
         interval: 10s
@@ -65,9 +64,9 @@ services:
   ########################
   keycloak:
     image: jboss/keycloak-openshift:3.3.0.Final
-    #depends_on:
-    #  postgres:
-    #    condition: service_healthy
+    depends_on:
+      postgres:
+        condition: service_healthy
     ports:
       - '5050:8080'
     entrypoint:
@@ -83,13 +82,11 @@ services:
       - POSTGRES_DATABASE=keycloak
       - POSTGRES_USER=keycloak
       - POSTGRES_PASSWORD=keycloak
-   # links:
-   #   - postgres:postgres
     volumes:
       - './config/keycloak/che:/opt/jboss/keycloak/themes/che'
       - './config/keycloak/:/opt/jboss/keycloak/realms/'
       #- './data/keycloak:/opt/jboss/keycloak/standalone/data:rw'
-     # - './logs/keycloak:/opt/jboss/keycloak/standalone/log:rw'
+      #- './logs/keycloak:/opt/jboss/keycloak/standalone/log:rw'
 
 networks:
   che-network:
