@@ -48,7 +48,7 @@ services:
  
   
     volumes:
-      - './data/postgres:/var/lib/pgsql/data:rw'
+      - './data/postgres:/var/lib/postgresql/data'
       - './config/postgres/init-che-user.sh:/docker-entrypoint-initdb.d/init-che-user.sh'
     healthcheck:
         test: [ "CMD", "/bin/sh", "-i", "-c", "psql -h 127.0.0.1 -U keycloak -q -d keycloak -c 'SELECT 1'" ]
