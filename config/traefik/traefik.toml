@@ -1,89 +1,62 @@
-################################################################
-# Global configuration
-################################################################
 
-# Timeout in seconds.
-# Duration to give active requests a chance to finish during hot-reloads
+# Enable Docker configuration backend.
+[docker]
+
+# Docker server endpoint. Can be a tcp or a unix socket endpoint.
+#
+# Required
+#
+endpoint = "unix:///var/run/docker.sock"
+
+# Default domain used.
+# Can be overridden by setting the "traefik.domain" label on a container.
+#
+# Required
+#
+domain = "docker.localhost"
+
+# Enable watch docker changes.
 #
 # Optional
-# Default: 10
 #
-# graceTimeOut = 10
+watch = true
 
-# Enable debug mode
+# Override default configuration template.
+# For advanced users :)
 #
 # Optional
-# Default: false
 #
-debug = true
+# filename = "docker.tmpl"
 
-# Periodically check if a new version has been released
+# Expose containers by default in Traefik.
+# If set to false, containers that don't have `traefik.enable=true` will be ignored.
 #
 # Optional
 # Default: true
 #
-checkNewVersion = false
+exposedbydefault = false
 
-# Traefik logs file
-# If not defined, logs to stdout
+# Use the IP address from the binded port instead of the inner network one.
+# For specific use-case :)
 #
-# Optional
-#
-# traefikLogsFile = "log/traefik.log"
-
-# Access logs file
-#
-# Optional
-#
-#accessLogsFile = "/tmp/log/access.log"
-
-# Log level
-#
-# Optional
-# Default: "ERROR"
-# Accepted values, in order of severity: "DEBUG", "INFO", "WARN", "ERROR", "FATAL", "PANIC"
-# Messages at and above the selected level will be logged.
-#
-# logLevel = "ERROR"
-
-# Backends throttle duration: minimum duration in seconds between 2 events from providers
-# before applying a new configuration. It avoids unnecessary reloads if multiples events
-# are sent in a short amount of time.
-#
-# Optional
-# Default: "2"
-#
-# ProvidersThrottleDuration = "5"
-
-# If non-zero, controls the maximum idle (keep-alive) to keep per-host.  If zero, DefaultMaxIdleConnsPerHost is used.
-# If you encounter 'too many open files' errors, you can either change this value, or change `ulimit` value.
-#
-# Optional
-# Default: http.DefaultMaxIdleConnsPerHost
-#
-# MaxIdleConnsPerHost = 200
-
-# If set to true invalid SSL certificates are accepted for backends.
-# Note: This disables detection of man-in-the-middle attacks so should only be used on secure backend networks.
 # Optional
 # Default: false
 #
-# InsecureSkipVerify = true
+#usebindportip = true
 
-# Entrypoints to be used by frontends that do not specify any entrypoint.
-# Each frontend can specify its own entrypoints.
+# Use Swarm Mode services as data provider.
 #
 # Optional
-# Default: ["http"]
+# Default: false
 #
-# defaultEntryPoints = ["http", "https"]
+swarmmode = true
 
-[web]
-address = ":7070"
-
-[entryPoints]
-  [entryPoints.http]
-  address = ":8080"
-
-[docker]
-watch = true
+# Enable docker TLS connection.
+#
+# Optional
+#
+#  [docker.tls]
+#  ca = "/etc/ssl/ca.crt"
+#  cert = "/etc/ssl/docker.crt"
+#  key = "/etc/ssl/docker.key"
+#  insecureskipverify = true
