@@ -29,19 +29,12 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-   # networks:
-   #   - default
-   #   - che-network
     volumes:
       - '/var/run/docker.sock:/var/run/docker.sock'
       - './data:/data:rw'
       - './logs:/logs:rw'
       - './config/che:/conf'
      # - '/home/zagrebaev/git/che/assembly-multiuser/assembly-main/target/eclipse-che-5.19.0/eclipse-che-5.19.0:/assembly'
-    ports:
-     # - '8080:8080'
-      - '8000:8000'
-    container_name: che
     labels:
       - "traefik.backend=che"
       - "traefik.backend.loadbalancer.sticky=true"
@@ -109,5 +102,3 @@ services:
       - "traefik.port=8080"
       - "traefik.enable=true"  
 
-networks:
-  che-network:
