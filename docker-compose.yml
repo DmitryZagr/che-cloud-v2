@@ -7,7 +7,7 @@ version: '2.1'
 services:
 
   traefik:
-    image: traefik:v1.4.1-alpine
+    image: traefik:v1.4.2
     command: --web --docker --docker.domain=docker.localhost --logLevel=DEBUG
     ports:
       - "80:80"
@@ -29,9 +29,9 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    networks:
-      - default
-      - che-network
+   # networks:
+   #   - default
+   #   - che-network
     volumes:
       - '/var/run/docker.sock:/var/run/docker.sock'
       - './data:/data:rw'
