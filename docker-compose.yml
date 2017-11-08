@@ -10,7 +10,7 @@ services:
     image: traefik:v1.4.2
     command: --web --docker --docker.domain=docker.localhost --logLevel=DEBUG
     ports:
-      - "80:80"
+      - "8080:80"
       - "7071:8080"
       - "443:443"
     volumes:
@@ -25,8 +25,8 @@ services:
     env_file:
       - './config/che/che.env'
     environment:
-     - "CHE_KEYCLOAK_AUTH__SERVER__URL=http://10.70.2.104/auth"
-     - "TRAEFIK_PORT=80"
+     - "CHE_KEYCLOAK_AUTH__SERVER__URL=http://10.70.2.104:8080/auth"
+     - "TRAEFIK_PORT=8080"
     depends_on:
       postgres:
         condition: service_healthy
@@ -37,7 +37,7 @@ services:
       - './config/che:/conf'
      # - '/home/zagrebaev/git/che/assembly-multiuser/assembly-main/target/eclipse-che-5.19.0/eclipse-che-5.19.0:/assembly'
     labels:
-      - "traefik.backend=che"
+      - "traefik.backend=che-server"
       - "traefik.backend.loadbalancer.sticky=true"
       - "traefik.frontend.rule=PathPrefix:/"
       - "traefik.port=8080"
