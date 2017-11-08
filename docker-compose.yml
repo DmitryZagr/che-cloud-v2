@@ -21,7 +21,7 @@ services:
   # CHE
   ########################
   che:
-    image: eclipse/che-server-multiuser:5.19.0
+    image: eclipse/che-server-multiuser:5.20.0
     env_file:
       - './config/che/che.env'
     environment:
