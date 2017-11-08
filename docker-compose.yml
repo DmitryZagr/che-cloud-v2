@@ -26,6 +26,7 @@ services:
       - './config/che/che.env'
     environment:
      - "CHE_KEYCLOAK_AUTH__SERVER__URL=http://10.70.2.104/auth"
+     - "TRAEFIK_PORT=80"
     depends_on:
       postgres:
         condition: service_healthy
