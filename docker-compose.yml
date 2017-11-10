@@ -72,7 +72,7 @@ services:
   # KEYCLOAK
   ########################
   keycloak:
-    image: jboss/keycloak-openshift:3.3.0.Final
+    image: jboss/keycloak-openshift:3.4.0.Final
     depends_on:
       postgres:
         condition: service_healthy
