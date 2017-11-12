@@ -34,7 +34,13 @@ docker-compose down && docker-compose up
 | ------------------| -------------------------|---------------------|
 | Ubuntu 16.04.1 LTS| 17.06.2-ce, build cec0b72|1.16.1, build 6d1ac21|
 
-#### Настройка keycloak
+## Настройка сервисов
+
+#### eclipse-che
+
+- В файле docker-compose пропишите в переменную окружения сервиса che **CHE_KEYCLOAK_AUTH__SERVER__URL** выш public-IP
+
+####  keycloak
 - перейдите на url /auth
 - стандартный логин/пароль : admin/admin
 - В левом углу выберите Che
