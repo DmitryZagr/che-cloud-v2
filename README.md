@@ -22,13 +22,20 @@ docker-compose down && docker-compose up
 ```
 
 #### Взаимодействие с системой
-сервис keycloak находится на контекстном пути /auth
-сервис eclipse-che находится на контекстном пути /
+
+|сервис         | контекстный путь |
+| ------------- | ---------------- |
+| eclipse-che   | /                |
+| keycloak      | /auth            |
 
 ## Литература
 #### Docker
 [Развертывание сервисов через *.yml файлы](http://training.play-with-docker.com/traefik-load-balancing/)
+
 [Типы labels в swarm](https://docs.docker.com/engine/reference/commandline/service_create/#specify-service-constraints-constraint)
+
+
 #### Мониторинг
 [Репозиторий](https://github.com/botleg/swarm-monitoring.git)
+
 [Настройка сервисов мониторинга swarm кластера](https://habrahabr.ru/company/southbridge/blog/327670/)
