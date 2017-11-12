@@ -38,7 +38,7 @@ docker-compose down && docker-compose up
 
 #### eclipse-che
 
-- В файле docker-compose пропишите в переменную окружения сервиса che **CHE_KEYCLOAK_AUTH__SERVER__URL** выш public-IP
+- В файле docker-compose пропишите в переменную окружения сервиса che **CHE_KEYCLOAK_AUTH__SERVER__URL** ваш public-IP
 
 ####  keycloak
 - перейдите на url /auth
