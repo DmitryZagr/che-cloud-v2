@@ -28,6 +28,20 @@ docker-compose down && docker-compose up
 | eclipse-che   | /                |
 | keycloak      | /auth            |
 
+
+#### Протестированное окружение
+|ОС                 | docker                   |docker-compose       |
+| ------------------| -------------------------|---------------------|
+| Ubuntu 16.04.1 LTS| 17.06.2-ce, build cec0b72|1.16.1, build 6d1ac21|
+
+#### Настройка keycloak
+- перейдите на url /auth
+- стандартный логин/пароль : admin/admin
+- В левом углу выберите Che
+- Clients -> che-public
+- Пропишите Ваш public-IP в **Valid Redirect URIs** и **Web Origins**
+- Нажмите Save внизу страницы
+
 ## Литература
 #### Docker
 [Развертывание сервисов через *.yml файлы](http://training.play-with-docker.com/traefik-load-balancing/)
