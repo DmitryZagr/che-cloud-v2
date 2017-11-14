@@ -111,7 +111,7 @@ services:
     dns: 127.0.0.1
     ports:
      - '172.17.0.1:10000:10000'
-     - "172.17.0.1:53:53/udp"
+    # - "172.17.0.1:53:53/udp"
     environment:
      # - POSTGRES_PORT_5432_TCP_ADDR=postgres
      # - POSTGRES_PORT_5432_TCP_PORT=5432
