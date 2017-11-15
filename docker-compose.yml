@@ -7,7 +7,7 @@ version: '2.1'
 services:
 
   traefik:
-    image: traefik:v1.4.2
+    image: traefik:v1.4.3
     command: --web --docker --docker.domain=docker.localhost --logLevel=DEBUG
     ports:
       - "8080:80"
@@ -16,6 +16,10 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./config/traefik/traefik.toml:/etc/traefik/traefik.toml:ro
+    labels:
+      - "traefik.enable=false"
+    networks:
+      - frontend
 
   ########################
   # CHE
@@ -42,6 +46,10 @@ services:
       - "traefik.frontend.rule=PathPrefix:/"
       - "traefik.port=8080"
       - "traefik.enable=true"
+      - "traefik.docker.network=checloudv2_frontend"
+    networks:
+      - db
+      - frontend
 
   ########################
   # POSTGRES
@@ -55,8 +63,6 @@ services:
       - CHE_POSTGRES_USERNAME=pgche
       - CHE_POSTGRES_PASSWORD=pgchepassword
       - CHE_POSTGRES_DATABASE=dbche
- 
-  
     volumes:
       - './data/postgres:/var/lib/postgresql/data'
       - './config/postgres/init-che-user.sh:/docker-entrypoint-initdb.d/init-che-user.sh'
@@ -66,7 +72,9 @@ services:
         timeout: 10s
         retries: 10
     labels:
-    - "traefik.enable=false"
+      - "traefik.enable=false"
+    networks:
+      - db
 
   ########################
   # KEYCLOAK
@@ -76,8 +84,6 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    #ports:
-    # - '5050:8080'
     entrypoint:
       - start-keycloak.sh
       - -Dkeycloak.migration.action=import
@@ -101,10 +107,13 @@ services:
       - "traefik.backend.loadbalancer.sticky=true"
       - "traefik.frontend.rule=PathPrefix:/auth"
       - "traefik.port=8080"
-      - "traefik.enable=true"  
+      - "traefik.docker.network=checloudv2_frontend"
+      - "traefik.enable=true"
+    networks:
+      - db
+      - frontend
 
 networks:
-  default:
-    external:
-      name: che_che-network
+  db:
+  frontend:
 
