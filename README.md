@@ -59,3 +59,6 @@ docker-compose down && docker-compose up
 [Репозиторий](https://github.com/botleg/swarm-monitoring.git)
 
 [Настройка сервисов мониторинга swarm кластера](https://habrahabr.ru/company/southbridge/blog/327670/)
+
+#### Прокси
+[Настройка меток traefik](https://docs.traefik.io/configuration/backends/docker/)
