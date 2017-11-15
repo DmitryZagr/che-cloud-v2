@@ -2,7 +2,7 @@
 
 ## Components
 
-  - traefik:v1.4.2
+  - traefik:v1.4.3
   - eclipse/che-server-multiuser:5.20.0
   - postgres:9.6
   - jboss/keycloak-openshift:3.4.0.Final
