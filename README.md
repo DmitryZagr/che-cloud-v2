@@ -3,9 +3,11 @@
 ## Components
 
   - traefik:v1.4.3
-  - eclipse/che-server-multiuser:5.20.0
-  - postgres:9.6
+  - eclipse/che-server-multiuser:5.20.1
   - jboss/keycloak-openshift:3.4.0.Final
+  - paunin/postdock-pgsql:9.6
+  - paunin/postdock-barman
+  - osixia/docker-openldap-backup
 
 #### Подготовка
 
@@ -13,6 +15,12 @@
 
 ```sh
 ./prepare.sh
+```
+
+Скрипт для сборки docker-образа openldap:
+
+```sh
+./build.sh
 ```
 
 #### Запуск системы
@@ -41,12 +49,17 @@ docker-compose down && docker-compose up
 - В файле docker-compose пропишите в переменную окружения сервиса che **CHE_KEYCLOAK_AUTH__SERVER__URL** ваш public-IP
 
 ####  keycloak
-- перейдите на url /auth
-- стандартный логин/пароль : admin/admin
-- В левом углу выберите Che
-- Clients -> che-public
-- Пропишите Ваш public-IP в **Valid Redirect URIs** и **Web Origins**
-- Нажмите Save внизу страницы
+
+- В файле docker-compose установите значения переменных окружения:
+     - CHE_REDIRECT_URIS="<ваш public-IP>/*"
+     - CHE_WEB_ORIGINS="<ваш public-IP>"
+
+#### openldap
+После развертывания системы необходимо запустить скрипт создания стандартных organization unit'ов в openldap:
+
+```sh
+./add_nodes.sh
+```
 
 ## Литература
 #### Docker
