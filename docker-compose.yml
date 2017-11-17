@@ -32,7 +32,7 @@ services:
     env_file:
       - './config/che/che.env'
     environment:
-     - "CHE_KEYCLOAK_AUTH__SERVER__URL=http://10.70.2.104:8080/auth"
+     - "CHE_KEYCLOAK_AUTH__SERVER__URL=http://10.70.2.244:8080/auth"
      - "TRAEFIK_PORT=8080"
     depends_on:
       postgres:
@@ -60,9 +60,6 @@ services:
   postgres:
     image: paunin/postdock-pgsql:9.6
     environment:
-      #POSTGRESQL_USER: keycloak
-      #POSTGRESQL_PASSWORD: keycloak
-      #POSTGRESQL_DATABASE: keycloak
       POSTGRES_PASSWORD: keycloak
       POSTGRES_USER: keycloak
       POSTGRES_DB: keycloak
@@ -96,6 +93,7 @@ services:
       - "traefik.enable=false"
     networks:
       - db
+
   ########################
   # BARMAN
   ########################
@@ -112,8 +110,11 @@ services:
       BACKUP_SCHEDULE: "*/10 * * * *"
     volumes:
       - ./data/postgres-backup:/var/backups
+    labels:
+      - "traefik.enable=false"
     networks:
       - db
+
   ########################
   # KEYCLOAK
   ########################
@@ -135,11 +136,11 @@ services:
       - POSTGRES_DATABASE=keycloak
       - POSTGRES_USER=keycloak
       - POSTGRES_PASSWORD=keycloak
-      - CHE_REDIRECT_URIS="http://10.70.2.244/*"
-      - CHE_WEB_ORIGINS="http://10.70.2.244"
+      - CHE_REDIRECT_URIS="http://10.70.2.244:8080/*"
+      - CHE_WEB_ORIGINS="http://10.70.2.244:8080"
     volumes:
       - './config/keycloak/che:/opt/jboss/keycloak/themes/che'
-      - './config/keycloak/realms:/opt/jboss/keycloak/realms/'
+      - './config/keycloak/realms/template:/tmp/keycloak/che'
       - './config/keycloak/keycloak-entrypoint.sh:/opt/jboss/docker-entrypoint.sh'
       #- './data/keycloak:/opt/jboss/keycloak/standalone/data:rw'
       #- './logs/keycloak:/opt/jboss/keycloak/standalone/log:rw'
@@ -153,6 +154,7 @@ services:
     networks:
       - db
       - frontend  
+
   ########################
   # OPENLDAP
   ########################
@@ -189,15 +191,14 @@ services:
       LDAP_BACKUP_TTL: "15"
     stdin_open: true
     volumes:
-      - /var/lib/ldap
-      - /etc/ldap/slapd.d
-      - /container/service/slapd/assets/certs/
+      - ./data/openldap/var:/var/lib/ldap
+      - ./data/openldap/etc:/etc/ldap/slapd.d
+      - ./data/openldap/container:/container/service/slapd/assets/certs/
       - ./data/openldap/backup:/data/backup
-    ports:
-      - "389:389"
-      - "636:636"
     domainname: "base.com" # important: same as hostname
     hostname: "base.com"
+    labels:
+      - "traefik.enable=false"
     networks:
       - db
 
