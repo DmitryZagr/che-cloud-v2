@@ -3,7 +3,7 @@
 ## Components
 
   - traefik:v1.4.3
-  - eclipse/che-server-multiuser:5.20.0
+  - eclipse/che-server-multiuser:5.20.1
   - postgres:9.6
   - jboss/keycloak-openshift:3.4.0.Final
 
@@ -33,6 +33,12 @@ docker-compose down && docker-compose up
 |ОС                 | docker                   |docker-compose       |
 | ------------------| -------------------------|---------------------|
 | Ubuntu 16.04.1 LTS| 17.06.2-ce, build cec0b72|1.16.1, build 6d1ac21|
+| Ubuntu 16.04.1 LTS| 17.06.2-ce, build cec0b72|1.17.1, build 6d101fb|
+
+#### Некорректные окружения
+|ОС                 | docker                   |docker-compose       |Причина           |
+| ------------------| -------------------------|---------------------|------------------|
+| Ubuntu 16.04.1 LTS| 17.06.2-ce, build cec0b72|1.17.0               |баг docker-compose|
 
 ## Настройка сервисов
 
