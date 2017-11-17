@@ -16,6 +16,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./config/traefik/traefik.toml:/etc/traefik/traefik.toml:ro
+      - ./data/traefik/acme:/etc/traefik/acme
     labels:
       - "traefik.enable=false"
     networks:
