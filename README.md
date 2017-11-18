@@ -4,7 +4,6 @@
 
   - traefik:v1.4.3
   - eclipse/che-server-multiuser:5.20.1
-  - postgres:9.6
   - jboss/keycloak-openshift:3.4.0.Final
   - paunin/postdock-pgsql:9.6
   - paunin/postdock-barman
@@ -21,6 +20,7 @@
 Скрипт для сборки docker-образа openldap:
 
 ```sh
+ cd build/docker-openldap-backup
 ./build.sh
 ```
 

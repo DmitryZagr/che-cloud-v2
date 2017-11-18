@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd ./data/openldap/backup
+cd ../../data/openldap/backup
 
 file=$1
 
