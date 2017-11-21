@@ -163,6 +163,7 @@ services:
   ########################
   openldap:
     image: airaketa/openldap:1.1.9
+    entrypoint: /container/service/docker-entrypoint.sh
     environment:
       LDAP_LOG_LEVEL: "256"
       LDAP_ORGANISATION: "1C"
