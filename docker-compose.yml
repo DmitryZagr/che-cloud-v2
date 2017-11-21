@@ -136,8 +136,11 @@ services:
       - POSTGRES_DATABASE=keycloak
       - POSTGRES_USER=keycloak
       - POSTGRES_PASSWORD=keycloak
-      - CHE_REDIRECT_URIS="http://10.70.2.244:8080/*"
-      - CHE_WEB_ORIGINS="http://10.70.2.244:8080"
+      - PROXY_ADDRESS_FORWARDING=true
+      - CHE_REDIRECT_URIS=http://10.70.2.244:8080/*
+      - CHE_WEB_ORIGINS=http://10.70.2.244:8080
+      - LDAP_BASE_DN=dc=base,dc=com
+      - LDAP_PASSWORD=adminpassword
     volumes:
       - './config/keycloak/che:/opt/jboss/keycloak/themes/che'
       - './config/keycloak/realms/template:/tmp/keycloak/che'
@@ -160,7 +163,7 @@ services:
   ########################
   openldap:
     image: airaketa/openldap:1.1.9
-    container_name: openldap
+    entrypoint: /container/service/docker-entrypoint.sh
     environment:
       LDAP_LOG_LEVEL: "256"
       LDAP_ORGANISATION: "1C"
