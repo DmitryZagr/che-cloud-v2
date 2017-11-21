@@ -39,8 +39,8 @@ services:
         condition: service_healthy
     volumes:
       - '/var/run/docker.sock:/var/run/docker.sock'
-      - './data:/data:rw'
-      - './logs:/logs:rw'
+      - './data/che/data:/data:rw'
+      - './data/che/logs:/logs:rw'
       - './config/che:/conf'
      # - '/home/zagrebaev/git/che/assembly-multiuser/assembly-main/target/eclipse-che-5.19.0/eclipse-che-5.19.0:/assembly'
     labels:
