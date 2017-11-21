@@ -137,8 +137,10 @@ services:
       - POSTGRES_USER=keycloak
       - POSTGRES_PASSWORD=keycloak
       - PROXY_ADDRESS_FORWARDING=true
-      - CHE_REDIRECT_URIS="http://10.70.2.244:8080/*"
-      - CHE_WEB_ORIGINS="http://10.70.2.244:8080"
+      - CHE_REDIRECT_URIS=http://10.70.2.244:8080/*
+      - CHE_WEB_ORIGINS=http://10.70.2.244:8080
+      - LDAP_BASE_DN=dc=base,dc=com
+      - LDAP_PASSWORD=adminpassword
     volumes:
       - './config/keycloak/che:/opt/jboss/keycloak/themes/che'
       - './config/keycloak/realms/template:/tmp/keycloak/che'

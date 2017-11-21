@@ -68,8 +68,8 @@
     "enabled" : true,
     "clientAuthenticatorType" : "client-secret",
     "secret" : "56abc663-1c41-4ab2-81d1-d4b704249221",
-    "redirectUris" : [ CHE_REDIRECT_URIS ],
-    "webOrigins" : [ CHE_WEB_ORIGINS ],
+    "redirectUris" : [ "CHE_REDIRECT_URIS" ],
+    "webOrigins" : [ "CHE_WEB_ORIGINS" ],
     "notBefore" : 0,
     "bearerOnly" : false,
     "consentRequired" : false,
@@ -427,7 +427,7 @@
             "true"
           ],
           "usersDn": [
-            "ou=users,dc=base,dc=com"
+            "ou=users,LDAP_BASE_DN"
           ],
           "cachePolicy": [
             "DEFAULT"
@@ -445,10 +445,10 @@
             "uid"
           ],
           "bindCredential": [
-            "adminpassword"
+            "LDAP_PASSWORD"
           ],
           "bindDn": [
-            "cn=admin,dc=base,dc=com"
+            "cn=admin,LDAP_BASE_DN"
           ],
           "vendor": [
             "other"

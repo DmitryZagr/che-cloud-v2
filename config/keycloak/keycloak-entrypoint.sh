@@ -2,7 +2,7 @@
 
 echo $CHE_REDIRECT_URIS $CHE_WEB_ORIGINS
 mkdir /opt/jboss/keycloak/realms/
-sed -e s#CHE_REDIRECT_URIS#$CHE_REDIRECT_URIS#g -e s#CHE_WEB_ORIGINS#$CHE_WEB_ORIGINS#g /tmp/keycloak/che/che-realm.json > /opt/jboss/keycloak/realms/che-realm.json
+sed -e s#CHE_REDIRECT_URIS#$CHE_REDIRECT_URIS#g -e s#CHE_WEB_ORIGINS#$CHE_WEB_ORIGINS#g -e s#LDAP_BASE_DN#$LDAP_BASE_DN#g -e s#LDAP_PASSWORD#$LDAP_PASSWORD#g /tmp/keycloak/che/che-realm.json > /opt/jboss/keycloak/realms/che-realm.json
 cp /tmp/keycloak/che/che-users-0.json /opt/jboss/keycloak/realms/che-users-0.json
 cp /tmp/keycloak/che/master-realm.json /opt/jboss/keycloak/realms/master-realm.json
 cp /tmp/keycloak/che/master-users-0.json /opt/jboss/keycloak/realms/master-users-0.json
