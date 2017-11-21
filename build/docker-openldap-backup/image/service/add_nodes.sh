@@ -12,5 +12,5 @@ touch "$DONEYET"
 
 # Put the command you want to run exactly once here:
 
-ldapadd -x -D cn=admin,dc=base,dc=com -w adminpassword -f /container/service/slapd/assets/default_nodes/add_nodes.ldif
+ldapadd -x -D cn=admin,$LDAP_BASE_DN -w $LDAP_ADMIN_PASSWORD -f /container/service/slapd/assets/default_nodes/add_nodes.ldif
 

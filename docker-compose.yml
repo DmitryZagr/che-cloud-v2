@@ -192,6 +192,7 @@ services:
       LDAP_BACKUP_DATA_CRON_EXP: "*/10 * * * *"
       #Backup TTL in days
       LDAP_BACKUP_TTL: "15"
+      ADD_NODES_TIMEOUT: 600
     stdin_open: true
     volumes:
       - ./data/openldap/var:/var/lib/ldap
