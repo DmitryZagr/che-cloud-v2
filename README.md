@@ -61,13 +61,6 @@ docker-compose down && docker-compose up
      - CHE_REDIRECT_URIS="<ваш public-IP>/*"
      - CHE_WEB_ORIGINS="<ваш public-IP>"
 
-#### openldap
-После развертывания системы необходимо запустить скрипт создания стандартных organization unit'ов в openldap:
-
-```sh
-./add_nodes.sh
-```
-
 ## Литература
 #### Docker
 [Развертывание сервисов через *.yml файлы](http://training.play-with-docker.com/traefik-load-balancing/)

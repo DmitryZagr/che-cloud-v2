@@ -136,8 +136,11 @@ services:
       - POSTGRES_DATABASE=keycloak
       - POSTGRES_USER=keycloak
       - POSTGRES_PASSWORD=keycloak
-      - CHE_REDIRECT_URIS="http://10.70.2.244:8080/*"
-      - CHE_WEB_ORIGINS="http://10.70.2.244:8080"
+      - PROXY_ADDRESS_FORWARDING=true
+      - CHE_REDIRECT_URIS=http://10.70.2.244:8080/*
+      - CHE_WEB_ORIGINS=http://10.70.2.244:8080
+      - LDAP_BASE_DN=dc=base,dc=com
+      - LDAP_PASSWORD=adminpassword
     volumes:
       - './config/keycloak/che:/opt/jboss/keycloak/themes/che'
       - './config/keycloak/realms/template:/tmp/keycloak/che'
@@ -160,7 +163,7 @@ services:
   ########################
   openldap:
     image: airaketa/openldap:1.1.9
-    container_name: openldap
+    entrypoint: /container/service/docker-entrypoint.sh
     environment:
       LDAP_LOG_LEVEL: "256"
       LDAP_ORGANISATION: "1C"
@@ -189,6 +192,7 @@ services:
       LDAP_BACKUP_DATA_CRON_EXP: "*/10 * * * *"
       #Backup TTL in days
       LDAP_BACKUP_TTL: "15"
+      ADD_DEFAULT_NODES_TIMEOUT: "60"   #in seconds
     stdin_open: true
     volumes:
       - ./data/openldap/var:/var/lib/ldap
