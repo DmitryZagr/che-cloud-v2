@@ -9,13 +9,8 @@
   - paunin/postdock-barman
   - osixia/docker-openldap-backup
 
-#### Подготовка
+#### Перед запуском
 
-Перед развертыванием системы запусите из корня проекта скрипт:
-
-```sh
-./prepare.sh
-```
 
 Скрипт для сборки docker-образа openldap:
 
@@ -38,6 +33,31 @@ docker-compose down && docker-compose up
 | keycloak      | /auth            |
 
 
+## Настройка сервисов
+
+#### eclipse-che
+
+- В файле docker-compose пропишите в переменную окружения сервиса che **CHE_KEYCLOAK_AUTH__SERVER__URL** ваш public-IP:прокси http порт
+**CHE_HOST** ваш public-IP
+**CHE_IP** ваш public-IP
+- Смена порта, через который eclipse-che будет доступен
+  - В сервисе **traefik** отмаить http порт на желаемый порт хоста
+  - В сервисе **che** изменить **CHE_PORT**, **traefik.port**, **TRAEFIK_PORT**, **CHE_KEYCLOAK_AUTH__SERVER__URL** на хостовый порт **traefik**
+  - В сервисе **keycloak** изменить **CHE_REDIRECT_URIS**, **CHE_WEB_ORIGINS** на хостовый порт **traefik**
+
+####  keycloak
+
+- В файле docker-compose установите значения переменных окружения:
+     - CHE_REDIRECT_URIS="<ваш public-IP>/*"
+     - CHE_WEB_ORIGINS="<ваш public-IP>"
+
+#### openldap
+После развертывания системы необходимо запустить скрипт создания стандартных organization unit'ов в openldap:
+
+```sh
+./add_nodes.sh
+```
+
 #### Протестированное окружение
 |ОС                 | docker                   |docker-compose       |
 | ------------------| -------------------------|---------------------|
@@ -48,18 +68,6 @@ docker-compose down && docker-compose up
 |ОС                 | docker                   |docker-compose       |Причина           |
 | ------------------| -------------------------|---------------------|------------------|
 | Ubuntu 16.04.1 LTS| 17.06.2-ce, build cec0b72|1.17.0               |баг docker-compose|
-
-## Настройка сервисов
-
-#### eclipse-che
-
-- В файле docker-compose пропишите в переменную окружения сервиса che **CHE_KEYCLOAK_AUTH__SERVER__URL** ваш public-IP
-
-####  keycloak
-
-- В файле docker-compose установите значения переменных окружения:
-     - CHE_REDIRECT_URIS="<ваш public-IP>/*"
-     - CHE_WEB_ORIGINS="<ваш public-IP>"
 
 ## Литература
 #### Docker
